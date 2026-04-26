@@ -185,14 +185,14 @@ tohtml "analysis_run.log", html("report.html") css(githubstyle) replace
    ishere ## Subsection
    ```
 
-6. **Figures**: Export then embed:
+6. **Figures**: Use `ishere fig using` to embed images in the report. **Always** use this pattern — do NOT rely on other methods:
    ```stata
    scatter price mpg
    graph export "scatter.png", replace
    ishere fig using "scatter.png"
    ```
 
-7. **Tables**: Export with outreg2e then embed:
+7. **Tables**: Use `ishere tab using` to embed regression tables in the report. **Always** use this pattern — do NOT rely on other methods. **Important**: `outreg2e` should NOT include the `ishere` option; instead, add a separate `ishere tab using` line below:
    ```stata
    qui regress price mpg weight
    estimates store model1
@@ -207,6 +207,24 @@ tohtml "analysis_run.log", html("report.html") css(githubstyle) replace
    ishere /*
    R-squared is {ishere display %5.3f `r2'}.
    ishere */
+   ishere
+   ```
+
+9. **Text block to code block transition**: After a text block (ending with `ishere */` or `***/`), **always** add `ishere` on the next line to mark the start of the next code block. Do NOT leave the text block hanging without a following `ishere`:
+   ```stata
+   ishere /*
+   This is explanatory text.
+   ishere */
+   ishere
+   summarize price
+   ```
+   The same applies to `***/`:
+   ```stata
+   /*
+   This is explanatory text.
+   ***/
+   ishere
+   summarize price
    ```
 
 9. **Report generation**:
@@ -396,6 +414,7 @@ ishere display %5.3f `r2'
 ishere /*
 The OLS regression yields an R-squared of {ishere display %5.3f `r2'}.
 ishere */
+ishere
 
 outreg2e [ols_model] using "regression_table.html", replace html
 ishere tab using "regression_table.html"
