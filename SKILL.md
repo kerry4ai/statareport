@@ -77,21 +77,42 @@ Known locations on this system:
 
 ### Phase 3: Prepare Working Directory
 
-Before executing the do-file, copy bundled ado files to the working directory so Stata can find them:
+Before executing the do-file, check which bundled commands are already available in Stata and only copy the missing ado files to the working directory.
+
+**Step 1: Check which commands already exist.** Run a small Stata script to test:
+
+```stata
+foreach cmd in ishere tohtml outreg2e sopen logoute {
+    capture which `cmd'
+    if _rc {
+        display "`cmd' NOT FOUND — needs copy"
+    }
+    else {
+        display "`cmd' already available"
+    }
+}
+```
+
+**Step 2: Copy only the missing ado files.** For each command reported as "NOT FOUND", copy the corresponding `.ado` file from the skill's `ado/` directory to the working directory.
+
+Example — only `ishere` and `tohtml` are missing:
 
 **Windows (PowerShell):**
 ```powershell
-$source = "C:\Users\kerry\.workbuddy\skills\stata-ai-report\ado\*"
+$source = "C:\Users\kerry\.workbuddy\skills\stata-ai-report\ado\"
 $dest = "C:\Users\kerry\Desktop\YourProject\"
-Copy-Item -Path $source -Destination $dest
+Copy-Item -Path "$source\ishere.ado" -Destination $dest
+Copy-Item -Path "$source\tohtml.ado" -Destination $dest
 ```
 
 **macOS/Linux (bash):**
 ```bash
 SOURCE="$HOME/.workbuddy/skills/stata-ai-report/ado/"
 DEST="$HOME/Desktop/YourProject/"
-cp "$SOURCE"*.ado "$DEST"
+cp "$SOURCE"{ishere,tohtml}.ado "$DEST"
 ```
+
+If all commands are already available, skip the copy step entirely.
 
 ### Phase 4: Generate Annotated Do-File
 
@@ -144,7 +165,7 @@ tohtml "analysis_run.log", html("report.html") css(githubstyle) replace
 
 #### Do-File Structure Rules
 
-1. **Add ado path**: Always start with `adopath ++ "."` so Stata can find bundled commands.
+1. **Add ado path**: If any bundled ado files were copied to the working directory in Phase 3, include `adopath ++ "."` so Stata can find them. If all commands were already available (none copied), this line is optional.
 
 2. **Set working directory**: Use `cd` to ensure outputs are saved in the correct location.
 
@@ -337,7 +358,7 @@ Must use `replace html` to generate HTML output that `ishere tab` can embed.
 **User**: "Analyze auto data: regress price on mpg and weight, include a scatter plot, and give me a report."
 
 **Agent prepares**:
-1. Copy `ado/*.ado` to working directory
+1. Check which bundled commands are missing (`which ishere`, `which tohtml`, etc.) and copy only the missing `.ado` files to working directory
 2. Generate `analysis.do`:
 
 ```stata
