@@ -21,7 +21,24 @@
 git clone https://github.com/kerry4ai/statareport.git stata-ai-report
 ```
 
-### 2. 在各 AI Agent 平台中安装
+### 2. 安装到 WorkBuddy
+
+[WorkBuddy](https://workbuddy.ai) 是 Windows 上的 AI Agent 桌面客户端，支持通过 skill 目录扩展能力。
+
+1. 将 skill 文件夹拷贝到 WorkBuddy 的 skills 目录：
+
+```powershell
+# 默认路径
+Copy-Item -Recurse -Path .\stata-ai-report -Destination "C:\Users\<你的用户名>\.workbuddy\skills\stata-ai-report"
+```
+
+2. 重启 WorkBuddy 或刷新 skill 列表，Agent 即可自动识别 `stata-ai-report` skill。
+
+3. Agent 在生成 do-file 时会自动引用 `SKILL.md` 中的工作流，并将 `ado/` 目录下的命令拷贝到工作目录。
+
+> **提示**：如果 WorkBuddy 安装在自定义路径，请将上述路径中的 `.workbuddy` 替换为实际安装目录。
+
+### 3. 在各 AI Agent 平台中安装
 
 #### Claude Code (Anthropic)
 
@@ -84,7 +101,7 @@ skills:
     path: ~/.hermes/skills/stata-ai-report/SKILL.md
 ```
 
-### 3. 安装 Stata 依赖
+### 4. 安装 Stata 依赖
 
 打开 Stata，运行：
 
