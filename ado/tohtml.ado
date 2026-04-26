@@ -574,7 +574,7 @@ void function rewrite_md(string scalar ofi, string scalar tfi, real scalar repla
     // 1. 读取文件
     fcon = cat(ofi)
     fcon = ishererep(fcon)
-    fcon
+
     // 2. 合并 HTML 行
     fcon = merge_html_vectorized(fcon)
     fcon = clean_textcell_content(fcon)
