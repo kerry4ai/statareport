@@ -1,5 +1,7 @@
 # Stata AI Report Generator
 
+[English](README_EN.md) | 中文
+
 自动化 Stata 数据分析并生成结构化 HTML 报告。
 
 本 Skill 为 AI Agent 提供了一套完整的工作流：检测 Stata 安装位置、生成带 `ishere` 标记的注释 do-file、执行 Stata 代码、输出自包含的 HTML 报告（含代码、结果、图表和回归表格）。
