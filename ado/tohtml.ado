@@ -1,3 +1,4 @@
+*!version 1.0, 2026-04-28
 capture program drop tohtml
 program define tohtml
 cap which pathutil
@@ -1056,6 +1057,30 @@ void function merge_cmdlog_blocks(string scalar clean_md, string scalar cmdlog_m
 
     // 2. 读取 cmdlog
     cmd = cat(cmdlog_md)
+    // 删除 log using 开始的行
+    flag = ustrpos(cmd, "log") :* ustrpos(cmd, "using")
+    flag = flag :* ustrpos(cmd, "text") 
+    flag = flag :* ustrpos(cmd, "replace") 
+    //flag
+    if (sum(flag) > 0) {
+        flag1 = selectindex(flag)
+        cmd = select(cmd, (1::length(cmd)) :!=flag1[1])
+    }
+    flag = ustrpos(cmd, "log") :* ustrpos(cmd, "close")
+    if (sum(flag) > 0) {
+        flag1 = selectindex(flag)
+        if (length(flag1) ==1 ) {
+            cmd = select(cmd, (1::length(cmd)) :!=flag1[1])
+         }
+         else{
+            //cmd = select(cmd, (1::length(cmd)) :!=flag1[length(flag1)])
+            cmd[flag1[length(flag1)]] = "ishere ```"
+            cmd = select(cmd, (1::length(cmd)) :!=flag1[1])
+         }
+    }
+        
+
+    cmd = ishererep2(cmd)
     n_cmd = rows(cmd)
 
     // Handle initial comment block 
@@ -1794,6 +1819,35 @@ string colvector function ishererep(string colvector content)
     if (length(flag) > 0) {
        lines[flag] = ustrltrim(lines[flag])
        lines[flag] = ustrregexra(lines[flag], "^\.\s*\*\*\s*", ". ishere ")
+    }
+    return(lines)
+}
+
+
+string colvector function ishererep2(string colvector content)
+{
+    lines =content
+    lines2 = usubinstr(lines," ","",.)
+    flag = selectindex(ustrpos(lines2, "**#") :== 1)
+    if (length(flag) > 0) {
+       lines[flag] = ustrltrim(lines[flag])
+       lines[flag] = ustrregexra(lines[flag], "^\s*\*\*\s*", "ishere ")
+    }
+    flag = selectindex(ustrpos(lines2, "**/*") :== 1)
+    if (length(flag) > 0) {
+       lines[flag] = ustrltrim(lines[flag])
+       lines[flag] = ustrregexra(lines[flag], "^\s*\*\*\s*", "ishere ")
+    }
+    flag = selectindex(ustrpos(lines2, "***/") :== 1)
+    if (length(flag) > 0) {
+       lines[flag] = ustrltrim(lines[flag])
+       lines[flag] = ustrregexra(lines[flag], "^\s*\*\*\s*", "ishere ")
+    }
+
+    flag = selectindex(ustrpos(lines2, "**```") :== 1)
+    if (length(flag) > 0) {
+       lines[flag] = ustrltrim(lines[flag])
+       lines[flag] = ustrregexra(lines[flag], "^\s*\*\*\s*", "ishere ")
     }
     return(lines)
 }
