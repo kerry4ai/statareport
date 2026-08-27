@@ -33,7 +33,7 @@ Copy-Item "~\.workbuddy\skills\stata-ai-report\ado\*" -Destination "~/stata-repo
 
 **macOS / Linux:**
 ```bash
-cp ~/.workbuddy/skills/stata-ai-report/ado/*.ado ~/stata-report-demo/
+cp ~/.workbuddy/skills/stata-ai-report/ado/* ~/stata-report-demo/
 ```
 
 然后在 Stata 中切换到该目录：
@@ -92,7 +92,7 @@ ishere tab using "reg_table.html"
 *  收尾
 * ============================================================
 capture log close
-tohtml "analysis_run.log", html("report.html") css(githubstyle) replace
+tohtml "analysis_run.log", html("report.html") replace
 ```
 
 ## Step 4: 执行
@@ -127,7 +127,7 @@ python ~/.workbuddy/skills/stata-ai-report/scripts/run_analysis.py analysis.do
 | `fig_price.png` | 价格分布直方图 |
 | `fig_scatter.png` | 价格-油耗散点图 |
 | `reg_table.html` | 回归表格（被嵌入 report.html） |
-| `css/` | `githubstyle` 样式文件 |
+| `css/` | 默认 GitHub 风格样式文件（`tohtml.css`） |
 
 用浏览器打开 `report.html` 即可查看完整报告。
 
@@ -136,10 +136,10 @@ python ~/.workbuddy/skills/stata-ai-report/scripts/run_analysis.py analysis.do
 如果你想在报告中同时展示原始代码和结果（适合教学或复现），将最后一句 `tohtml` 改为：
 
 ```stata
-tohtml "analysis_run.log", html("report.html") css(githubstyle) cleancode("analysis.do") replace
+tohtml "analysis_run.log", html("report.html") cleancode replace
 ```
 
-这会生成一份代码与结果交织的报告，原始 do-file 中的注释和命令都会保留在 HTML 中。
+这会生成一份代码与结果交织的报告：保留日志中记录的 Stata 命令、标题、图表与表格，但去掉控制台输出。`cleancode` 直接读取日志，无需再传入 do-file 路径。
 
 ## 完整演示文件
 

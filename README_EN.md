@@ -155,20 +155,20 @@ ishere tab using "table.html"
 
 **Standard mode (results only):**
 ```stata
-tohtml "analysis.log", html("report.html") css(githubstyle) replace
+tohtml "analysis.log", html("report.html") replace
 ```
 
 **Code + results mode (for teaching / reproducibility):**
 ```stata
-tohtml "analysis.log", html("report.html") css(githubstyle) cleancode("analysis.do") replace
+tohtml "analysis.log", html("report.html") cleancode replace
 ```
 
 ## Output Modes Comparison
 
 | Mode | Command | Use Case |
 |------|---------|----------|
-| Standard | `css(githubstyle)` | Final client report, results only |
-| CleanCode | `cleancode("do.do")` | Teaching, reproducible research, full workflow |
+| Standard | `tohtml "log", html("r.html") replace` | Final client report, results only (default `tohtml.css` styling) |
+| CleanCode | `cleancode` | Teaching, reproducible research, full workflow (commands only, no console output) |
 
 ## FAQ
 

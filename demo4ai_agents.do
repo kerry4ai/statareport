@@ -55,5 +55,5 @@ outreg2e [model*] using "model.html", replace html
 ishere tab using "model.html"
 
 capture log close
-tohtml "demo.log",  html("demo.html") css(githubstyle) replace
+tohtml "demo.log",  html("demo.html") replace
 sopen demo.html

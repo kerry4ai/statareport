@@ -156,20 +156,20 @@ ishere tab using "table.html"
 
 **标准模式（仅结果）：**
 ```stata
-tohtml "analysis.log", html("report.html") css(githubstyle) replace
+tohtml "analysis.log", html("report.html") replace
 ```
 
 **代码+结果模式（适合教学/复现）：**
 ```stata
-tohtml "analysis.log", html("report.html") css(githubstyle) cleancode("analysis.do") replace
+tohtml "analysis.log", html("report.html") cleancode replace
 ```
 
 ## 两种输出模式对比
 
 | 模式 | 命令 | 适用场景 |
 |------|------|---------|
-| 标准模式 | `css(githubstyle)` | 最终交付报告，只展示结果 |
-| CleanCode | `cleancode("do.do")` | 教学、可复现研究、展示完整工作流 |
+| 标准模式 | `tohtml "log", html("r.html") replace` | 最终交付报告，只展示结果（默认 `tohtml.css` 样式） |
+| CleanCode | `cleancode` | 教学、可复现研究、展示完整工作流（仅保留命令，去掉控制台输出） |
 
 ## 常见问题
 

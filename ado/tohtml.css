@@ -1,0 +1,154 @@
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+    --font-sans-serif: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-monospace: "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", monospace;
+}
+
+body {
+    font-family: var(--font-sans-serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    background-color: white;
+    margin: 0 auto;
+    padding: 2rem;
+    max-width: 900px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+    line-height: 1.25;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+h1 { font-size: 2.25em; padding-bottom: 0.3em; border-bottom: 1px solid #eaecef; }
+h2 { font-size: 1.75em; padding-bottom: 0.3em; border-bottom: 1px solid #eaecef; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 0.875em; color: #777; }
+
+/* Links */
+a {
+    color: #4183C4;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Paragraphs & Lists */
+p, blockquote, ul, ol, dl, table, pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+ul, ol {
+    padding-left: 2em;
+}
+
+/* Blockquotes */
+blockquote {
+    padding: 0 1em;
+    color: #777;
+    border-left: 0.25em solid #dfe2e5;
+    background: transparent;
+}
+
+/* Tables - GitHub Style */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 16px;
+    display: block;
+    overflow: auto;
+}
+
+table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+table th, table td {
+    border: 1px solid #dfe2e5;
+    padding: 6px 13px;
+    margin: 0;
+}
+
+table th {
+    font-weight: 600;
+    background-color: #f6f8fa; /* Header background usually distinct */
+}
+
+/* Code Blocks & Inline Code */
+code, kbd, pre, samp {
+    font-family: var(--font-monospace);
+}
+
+/* Inline code */
+code {
+    background-color: #f3f4f4;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    margin: 0 2px;
+}
+
+/* Block code (pre) */
+pre {
+    background-color: #f8f8f8;
+    border: 1px solid #e7eaed;
+    border-radius: 3px;
+    padding: 16px;
+    overflow: auto;
+    line-height: 1.45;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    font-size: 100%; /* Reset from inline code size */
+}
+
+/* Stata fenced code: ```stata → <code class="language-stata"> */
+pre code.language-stata,
+code.language-stata {
+    color: #24292f;
+}
+
+pre:has(code.language-stata) {
+    background-color: #f6f8fa;
+    border-left: 4px solid #1a7f37;
+}
+
+/* Horizontal Rule */
+hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e7e7e7;
+    border: 0;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* MathJax */
+mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
